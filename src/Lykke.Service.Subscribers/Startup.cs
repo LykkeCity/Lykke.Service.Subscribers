@@ -93,26 +93,11 @@ namespace Lykke.Service.Subscribers
                     x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 }); app.UseStaticFiles();
 
-                appLifetime.ApplicationStarted.Register(() => StartApplication().Wait());
                 appLifetime.ApplicationStopped.Register(() => CleanUp().Wait());
             }
             catch (Exception ex)
             {
                 Log?.WriteFatalErrorAsync(nameof(Startup), nameof(Configure), "", ex).Wait();
-                throw;
-            }
-        }
-
-        private async Task StartApplication()
-        {
-            try
-            {
-                await ApplicationContainer.Resolve<IStartupManager>().StartAsync();
-                await Log.WriteMonitorAsync("", "", "Started");
-            }
-            catch (Exception ex)
-            {
-                await Log.WriteFatalErrorAsync(nameof(Startup), nameof(StartApplication), "", ex);
                 throw;
             }
         }
