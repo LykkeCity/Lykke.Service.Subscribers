@@ -74,6 +74,19 @@ namespace Lykke.Service.Subscribers
             }
         }
 
+        private async Task StartApplication()
+        {
+            try
+            {
+                await Log.WriteMonitorAsync("", "", "Started");
+            }
+            catch (Exception ex)
+            {
+                await Log.WriteFatalErrorAsync(nameof(Startup), nameof(StartApplication), "", ex);
+                throw;
+            }
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
         {
             try
@@ -93,6 +106,7 @@ namespace Lykke.Service.Subscribers
                     x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 }); app.UseStaticFiles();
 
+                appLifetime.ApplicationStarted.Register(() => StartApplication().Wait());
                 appLifetime.ApplicationStopped.Register(() => CleanUp().Wait());
             }
             catch (Exception ex)
