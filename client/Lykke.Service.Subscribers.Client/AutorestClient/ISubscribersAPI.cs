@@ -88,7 +88,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<int?>> CreateAsyncWithHttpMessagesAsync(SubscriberRequestModel subscriber = default(SubscriberRequestModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> CreateAsyncWithHttpMessagesAsync(SubscriberRequestModel subscriber = default(SubscriberRequestModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete a subscriber.
@@ -105,7 +105,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<int?>> DeleteAsyncWithHttpMessagesAsync(string email = default(string), string source = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteAsyncWithHttpMessagesAsync(string email = default(string), string source = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

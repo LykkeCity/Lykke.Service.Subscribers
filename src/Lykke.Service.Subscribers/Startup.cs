@@ -94,7 +94,6 @@ namespace Lykke.Service.Subscribers
                 }); app.UseStaticFiles();
 
                 appLifetime.ApplicationStarted.Register(() => StartApplication().Wait());
-                appLifetime.ApplicationStopping.Register(() => StopApplication().Wait());
                 appLifetime.ApplicationStopped.Register(() => CleanUp().Wait());
             }
             catch (Exception ex)
@@ -118,28 +117,10 @@ namespace Lykke.Service.Subscribers
             }
         }
 
-        private async Task StopApplication()
-        {
-            try
-            {
-                await ApplicationContainer.Resolve<IShutdownManager>().StopAsync();
-            }
-            catch (Exception ex)
-            {
-                if (Log != null)
-                {
-                    await Log.WriteFatalErrorAsync(nameof(Startup), nameof(StopApplication), "", ex);
-                }
-                throw;
-            }
-        }
-
         private async Task CleanUp()
         {
             try
             {
-                // NOTE: Service can't recieve and process requests here, so you can destroy all resources
-
                 if (Log != null)
                 {
                     await Log.WriteMonitorAsync("", "", "Terminating");
@@ -165,7 +146,6 @@ namespace Lykke.Service.Subscribers
 
             aggregateLogger.AddLog(consoleLogger);
 
-            // Creating slack notification service, which logs own azure queue processing messages to aggregate log
             var slackService = services.UseSlackNotificationsSenderViaAzureQueue(new AzureQueueIntegration.AzureQueueSettings
             {
                 ConnectionString = settings.CurrentValue.SlackNotifications.AzureQueue.ConnectionString,
@@ -175,7 +155,6 @@ namespace Lykke.Service.Subscribers
             var dbLogConnectionStringManager = settings.Nested(x => x.SubscribersService.Db.LogsConnString);
             var dbLogConnectionString = dbLogConnectionStringManager.CurrentValue;
 
-            // Creating azure storage logger, which logs own messages to concole log
             if (!string.IsNullOrEmpty(dbLogConnectionString) && !(dbLogConnectionString.StartsWith("${") && dbLogConnectionString.EndsWith("}")))
             {
                 var persistenceManager = new LykkeLogToAzureStoragePersistenceManager(

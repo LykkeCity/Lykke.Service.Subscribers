@@ -9,7 +9,7 @@ namespace Lykke.Service.Subscribers.Client
     {
         Task<IEnumerable<SubscriberResponse>> GetAsync(string source);
         Task<SubscriberResponse> GetByEmailAsync(string source, string email);
-        Task CreateSubscriber(SubscriberRequestModel model);
-        Task DeleteSubscriber(string source, string email);
+        Task CreateSubscriberAsync(SubscriberRequestModel model);
+        Task DeleteSubscriberAsync(string source, string email);
     }
 }

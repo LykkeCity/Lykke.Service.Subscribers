@@ -48,12 +48,12 @@ namespace Lykke.Service.Subscribers.Client
             return CreateNullableModel(response);
         }
 
-        public async Task CreateSubscriber(SubscriberRequestModel model)
+        public async Task CreateSubscriberAsync(SubscriberRequestModel model)
         {
             await _apiClient.CreateAsyncAsync(model);
         }
 
-        public async Task DeleteSubscriber(string source, string email)
+        public async Task DeleteSubscriberAsync(string source, string email)
         {
             await _apiClient.DeleteAsyncAsync(email: email, source: source);
         }

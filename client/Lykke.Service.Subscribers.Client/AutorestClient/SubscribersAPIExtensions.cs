@@ -128,9 +128,9 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// <param name='subscriber'>
             /// Subscriber request model
             /// </param>
-            public static int? CreateAsync(this ISubscribersAPI operations, SubscriberRequestModel subscriber = default(SubscriberRequestModel))
+            public static void CreateAsync(this ISubscribersAPI operations, SubscriberRequestModel subscriber = default(SubscriberRequestModel))
             {
-                return operations.CreateAsyncAsync(subscriber).GetAwaiter().GetResult();
+                operations.CreateAsyncAsync(subscriber).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,12 +145,9 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> CreateAsyncAsync(this ISubscribersAPI operations, SubscriberRequestModel subscriber = default(SubscriberRequestModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsyncAsync(this ISubscribersAPI operations, SubscriberRequestModel subscriber = default(SubscriberRequestModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateAsyncWithHttpMessagesAsync(subscriber, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CreateAsyncWithHttpMessagesAsync(subscriber, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -165,9 +162,9 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// <param name='source'>
             /// Source from which is created the subscription
             /// </param>
-            public static int? DeleteAsync(this ISubscribersAPI operations, string email = default(string), string source = default(string))
+            public static void DeleteAsync(this ISubscribersAPI operations, string email = default(string), string source = default(string))
             {
-                return operations.DeleteAsyncAsync(email, source).GetAwaiter().GetResult();
+                operations.DeleteAsyncAsync(email, source).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,12 +182,9 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> DeleteAsyncAsync(this ISubscribersAPI operations, string email = default(string), string source = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsyncAsync(this ISubscribersAPI operations, string email = default(string), string source = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteAsyncWithHttpMessagesAsync(email, source, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteAsyncWithHttpMessagesAsync(email, source, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
