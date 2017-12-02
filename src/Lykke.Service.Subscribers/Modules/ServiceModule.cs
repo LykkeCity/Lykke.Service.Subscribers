@@ -38,9 +38,6 @@ namespace Lykke.Service.Subscribers.Modules
 
             builder.RegisterType<StartupManager>()
                 .As<IStartupManager>();
-
-            builder.RegisterType<ShutdownManager>()
-                .As<IShutdownManager>();
         }
     }
 }

@@ -6,7 +6,6 @@ using Lykke.Service.Subscribers.Models.Subsribers;
 using Lykke.Service.Subscribers.Strings;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,6 +14,7 @@ using System.Threading.Tasks;
 namespace Lykke.Service.Subscribers.Controllers
 {
     [Route("api/subscribers")]
+    [Produces("application/json")]
     public class SubscribersController : Controller
     {
         private readonly ISubscriberRepository _subscriberRepository;
@@ -64,25 +64,16 @@ namespace Lykke.Service.Subscribers.Controllers
         /// <param name="subscriber">Subscriber request model</param>
         [HttpPut("create")]
         [SwaggerOperation("CreateAsync")]
-        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateAsync([FromBody] SubscriberRequestModel subscriber)
         {
-            try
+            await _subscriberRepository.CreateAsync(new Subscriber()
             {
-                await _subscriberRepository.CreateAsync(new Subscriber()
-                {
-                    Email = subscriber.Email,
-                    PartnerId = subscriber.PartnerId,
-                    Source = subscriber.Source
-                });
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                await _log.WriteInfoAsync(nameof(SubscribersController), nameof(CreateAsync), ex.Message, DateTime.Now);
-                return BadRequest(ex.Message);
-            }
+                Email = subscriber.Email,
+                PartnerId = subscriber.PartnerId,
+                Source = subscriber.Source
+            });
+            return Ok();
         }
 
         /// <summary>
@@ -92,7 +83,7 @@ namespace Lykke.Service.Subscribers.Controllers
         /// <param name="email">Email of subscriber</param>
         [HttpDelete("delete")]
         [SwaggerOperation("DeleteAsync")]
-        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> DeleteAsync([FromQuery] string email, [FromQuery] string source)
         {
