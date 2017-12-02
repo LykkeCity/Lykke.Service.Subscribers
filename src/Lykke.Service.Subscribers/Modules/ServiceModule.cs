@@ -35,9 +35,6 @@ namespace Lykke.Service.Subscribers.Modules
             builder.RegisterType<HealthService>()
                 .As<IHealthService>()
                 .SingleInstance();
-
-            builder.RegisterType<StartupManager>()
-                .As<IStartupManager>();
         }
     }
 }
