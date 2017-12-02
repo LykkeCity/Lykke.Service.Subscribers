@@ -14,14 +14,10 @@ namespace Lykke.Service.Subscribers.Client
         private readonly ILog _log;
         private SubscribersAPI _apiClient;
 
-        public SubscribersClient(string serviceUrl, ILog log, int timeout)
+        public SubscribersClient(string serviceUrl, ILog log)
         {
             _log = log;
-            _apiClient =
-              new SubscribersAPI(new Uri(serviceUrl))
-              {
-                  HttpClient = { Timeout = TimeSpan.FromSeconds(timeout) }
-              };
+            _apiClient = new SubscribersAPI(new Uri(serviceUrl));
         }
 
         public void Dispose()
