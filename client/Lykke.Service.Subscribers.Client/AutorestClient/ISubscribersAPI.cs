@@ -49,6 +49,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Get a subscribers.
         /// </summary>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -62,8 +63,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Get a subscriber by email.
         /// </summary>
         /// <param name='email'>
+        /// Email of subscriber
         /// </param>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,6 +80,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Create a subscriber.
         /// </summary>
         /// <param name='subscriber'>
+        /// Subscriber request model
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -90,8 +94,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Delete a subscriber.
         /// </summary>
         /// <param name='email'>
+        /// Email of subscriber
         /// </param>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

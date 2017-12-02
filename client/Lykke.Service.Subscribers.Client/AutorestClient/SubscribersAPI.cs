@@ -283,6 +283,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Get a subscribers.
         /// </summary>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -360,7 +361,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -415,8 +416,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Get a subscriber by email.
         /// </summary>
         /// <param name='email'>
+        /// Email of subscriber
         /// </param>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -499,7 +502,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200 && (int)_statusCode != 404)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -554,6 +557,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Create a subscriber.
         /// </summary>
         /// <param name='subscriber'>
+        /// Subscriber request model
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -628,7 +632,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 400)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -683,8 +687,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
         /// Delete a subscriber.
         /// </summary>
         /// <param name='email'>
+        /// Email of subscriber
         /// </param>
         /// <param name='source'>
+        /// Source from which is created the subscription
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -767,7 +773,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 404)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {

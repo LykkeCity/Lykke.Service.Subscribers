@@ -47,7 +47,7 @@ namespace Lykke.Service.Subscribers.AzureRepositories.Subscribers
         public async Task DeleteAsync(string email, string source)
         {
             var partitionKey = Subscriber.GeneratePartitionKey(source);
-            var rowKey = Subscriber.GenerateRowKey(email); ;
+            var rowKey = Subscriber.GenerateRowKey(email);
 
             var entity = await _tableStorage.GetDataAsync(partitionKey, rowKey);
             await _tableStorage.DeleteAsync(entity.PartitionKey, entity.RowKey);

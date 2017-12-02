@@ -6,6 +6,7 @@ using Lykke.Service.Subscribers.Models.Subsribers;
 using Lykke.Service.Subscribers.Strings;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -28,10 +29,10 @@ namespace Lykke.Service.Subscribers.Controllers
         /// <summary>
         /// Get a subscribers.
         /// </summary>
+        ///<param name="source">Source from which is created the subscription</param>
         [HttpGet]
         [SwaggerOperation("GetSubsribers")]
         [ProducesResponseType(typeof(IEnumerable<SubscriberResponseModel>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAllSubscribers([FromQuery] string source)
         {
             var result = (await _subscriberRepository.GetAllAsync(source)).Select(s => SubscriberResponseModel.Create(s));
@@ -41,10 +42,11 @@ namespace Lykke.Service.Subscribers.Controllers
         /// <summary>
         /// Get a subscriber by email.
         /// </summary>
+        ///<param name="source">Source from which is created the subscription</param>
+        ///<param name="email">Email of subscriber</param>
         [HttpGet("getSubsribersByEmail")]
         [SwaggerOperation("GetSubsribersByEmail")]
         [ProducesResponseType(typeof(SubscriberResponseModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetByEmail([FromQuery] string email, [FromQuery] string source)
         {
@@ -59,28 +61,48 @@ namespace Lykke.Service.Subscribers.Controllers
         /// <summary>
         /// Create a subscriber.
         /// </summary>
+        /// <param name="subscriber">Subscriber request model</param>
         [HttpPut("create")]
         [SwaggerOperation("CreateAsync")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
-        public async Task CreateAsync([FromBody] SubscriberRequestModel subscriber)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateAsync([FromBody] SubscriberRequestModel subscriber)
         {
-            await _subscriberRepository.CreateAsync(new Subscriber()
+            try
             {
-                Email = subscriber.Email,
-                PartnerId = subscriber.PartnerId,
-                Source = subscriber.Source
-            });
+                await _subscriberRepository.CreateAsync(new Subscriber()
+                {
+                    Email = subscriber.Email,
+                    PartnerId = subscriber.PartnerId,
+                    Source = subscriber.Source
+                });
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                await _log.WriteInfoAsync(nameof(SubscribersController), nameof(CreateAsync), ex.Message, DateTime.Now);
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
         /// Delete a subscriber.
         /// </summary>
+        /// <param name="source">Source from which is created the subscription</param>
+        /// <param name="email">Email of subscriber</param>
         [HttpDelete("delete")]
         [SwaggerOperation("DeleteAsync")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
-        public async Task DeleteAsync([FromQuery] string email, [FromQuery] string source)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> DeleteAsync([FromQuery] string email, [FromQuery] string source)
         {
+            var result = await _subscriberRepository.GetAsync(email, source);
+
+            if (result == null)
+                return NotFound(Phrases.NotFound);
+
             await _subscriberRepository.DeleteAsync(email, source);
+            return Ok();
         }
     }
 }

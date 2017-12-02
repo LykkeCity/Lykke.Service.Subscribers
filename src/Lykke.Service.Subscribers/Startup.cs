@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation.AspNetCore;
+using Lykke.Service.Subscribers.Models.Validations;
 
 namespace Lykke.Service.Subscribers
 {
@@ -40,12 +42,15 @@ namespace Lykke.Service.Subscribers
         {
             try
             {
-                services.AddMvc()
-                    .AddJsonOptions(options =>
-                    {
-                        options.SerializerSettings.ContractResolver =
-                            new Newtonsoft.Json.Serialization.DefaultContractResolver();
-                    });
+                services.AddMvc(options =>
+                {
+                    options.Filters.Add<ValidateModelAttribute>();
+                }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+                  .AddJsonOptions(options =>
+                  {
+                      options.SerializerSettings.ContractResolver =
+                          new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                  });
 
                 services.AddSwaggerGen(options =>
                 {
@@ -94,7 +99,7 @@ namespace Lykke.Service.Subscribers
             }
             catch (Exception ex)
             {
-                Log?.WriteFatalErrorAsync(nameof(Startup), nameof(ConfigureServices), "", ex).Wait();
+                Log?.WriteFatalErrorAsync(nameof(Startup), nameof(Configure), "", ex).Wait();
                 throw;
             }
         }
@@ -174,7 +179,7 @@ namespace Lykke.Service.Subscribers
             if (!string.IsNullOrEmpty(dbLogConnectionString) && !(dbLogConnectionString.StartsWith("${") && dbLogConnectionString.EndsWith("}")))
             {
                 var persistenceManager = new LykkeLogToAzureStoragePersistenceManager(
-                    AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "LykkeServiceLog", consoleLogger),
+                    AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "SubscribersServiceLog", consoleLogger),
                     consoleLogger);
 
                 var slackNotificationsManager = new LykkeLogToAzureSlackNotificationsManager(slackService, consoleLogger);

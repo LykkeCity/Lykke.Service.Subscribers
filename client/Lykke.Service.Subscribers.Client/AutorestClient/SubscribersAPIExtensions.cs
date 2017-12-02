@@ -52,6 +52,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             public static IList<SubscriberResponseModel> GetSubsribers(this ISubscribersAPI operations, string source = default(string))
             {
@@ -65,6 +66,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -84,8 +86,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='email'>
+            /// Email of subscriber
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             public static SubscriberResponseModel GetSubsribersByEmail(this ISubscribersAPI operations, string email = default(string), string source = default(string))
             {
@@ -99,8 +103,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='email'>
+            /// Email of subscriber
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -120,6 +126,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriber'>
+            /// Subscriber request model
             /// </param>
             public static int? CreateAsync(this ISubscribersAPI operations, SubscriberRequestModel subscriber = default(SubscriberRequestModel))
             {
@@ -133,6 +140,7 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriber'>
+            /// Subscriber request model
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -152,8 +160,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='email'>
+            /// Email of subscriber
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             public static int? DeleteAsync(this ISubscribersAPI operations, string email = default(string), string source = default(string))
             {
@@ -167,8 +177,10 @@ namespace Lykke.Service.Subscribers.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='email'>
+            /// Email of subscriber
             /// </param>
             /// <param name='source'>
+            /// Source from which is created the subscription
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

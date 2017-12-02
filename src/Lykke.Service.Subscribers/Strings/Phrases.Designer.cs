@@ -61,6 +61,24 @@ namespace Lykke.Service.Subscribers.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field Should Not Be Empty.
+        /// </summary>
+        public static string FieldShouldNotBeEmpty {
+            get {
+                return ResourceManager.GetString("FieldShouldNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Email Format.
+        /// </summary>
+        public static string InvalidEmailFormat {
+            get {
+                return ResourceManager.GetString("InvalidEmailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Found.
         /// </summary>
         public static string NotFound {

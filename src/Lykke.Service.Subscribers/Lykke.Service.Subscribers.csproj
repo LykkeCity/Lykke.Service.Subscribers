@@ -31,6 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.3.0-beta2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.3.0-beta2" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Lykke.Common" Version="3.0.0" />
     <PackageReference Include="Lykke.Common.ApiLibrary" Version="1.0.16" />
